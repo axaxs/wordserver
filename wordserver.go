@@ -2,6 +2,7 @@ package main
 
 import (
 	//	"fmt"
+
 	"net/http"
 	"sort"
 	"strings"
@@ -73,16 +74,18 @@ func handler(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	err := wordsFromFile("wordlist")
+	err := wordsFromFile("aswordlist.txt")
 	if err != nil {
-		return
+		panic(err)
 	}
+
 	prefixTree = wordtrie.NewTrie()
 	suffixTree = wordtrie.NewTrie()
 	for _, v := range allWords {
 		prefixTree.Insert(v)
 		suffixTree.Insert(reverseString(v))
 	}
+
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
 }
