@@ -12,9 +12,11 @@ func buildChildWords(t *wordtrie.Trie) []string {
 	if curTrie.IsWord {
 		words = append(words, curTrie.BuildWord())
 	}
+
 	for _, trie := range curTrie.Children {
 		words = append(words, buildChildWords(trie)...)
 	}
+
 	return words
 }
 
@@ -24,6 +26,7 @@ func buildChildWordsContaining(t *wordtrie.Trie, curs string) []string {
 	if t.IsWord {
 		words = append(words, t.BuildWord())
 	}
+
 	for _, trie := range t.Children {
 		if strings.Contains(curs, string(trie.Chr)) {
 			words = append(words, buildChildWordsContaining(trie, curs)...)
@@ -56,6 +59,7 @@ func anagrams(t *wordtrie.Trie, s string) []string {
 			res = append(res, v)
 		}
 	}
+
 	return res
 }
 
@@ -79,5 +83,6 @@ func startsWith(t *wordtrie.Trie, in string) []string {
 			return []string{}
 		}
 	}
+
 	return buildChildWords(curTrie)
 }
