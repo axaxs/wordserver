@@ -38,7 +38,7 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
 	broken := strings.Split(req.URL.Path, "/")
 	if len(broken) != 3 {
-		w.Write([]byte("Invalid URI\n"))
+		w.Write([]byte("Usage:\n\n /anagrams/xyz - all anagrams of xyz \n\n /canmake/xyz - all words that can be made with the letters of xyz \n\n /startswith/xyz - all words that start with xyz \n\n /endswith/xyz - all words that end with xyz \n\n /contains/xyz - all words that contains xyz \n\n All words are lowercased, and unicode characters converted to standard English alphabet(ASCII)."))
 		return
 	}
 	match := strings.ToLower(broken[2])
@@ -77,6 +77,7 @@ func main() {
 	err := wordsFromFile("aswordlist.txt")
 	if err != nil {
 		panic(err)
+
 	}
 
 	prefixTree = wordtrie.NewTrie()
